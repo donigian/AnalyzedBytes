@@ -1,0 +1,11 @@
+.idea
+*.zip
+FitNesseRoot/
+FitNesseRoot/files
+FitNesseRoot/ErrorLogs
+FitNesseRoot/FitNesse
+FitNesseRoot/RecentChanges
+AnalyzedBytes.iml
+out
+target
+.DS_Store
