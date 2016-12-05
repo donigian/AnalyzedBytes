@@ -9,9 +9,11 @@ import java.util.List;
 public class MockGateway implements Gateway {
 
     private ArrayList<Bizcast> bizcasts;
+    public ArrayList<User> users;
 
     public MockGateway() {
         bizcasts = new ArrayList<Bizcast>();
+        users = new ArrayList<User>();
     }
 
     public List<Bizcast> findAllBizcasts() {
@@ -24,5 +26,18 @@ public class MockGateway implements Gateway {
 
     public void save(Bizcast bizcast) {
         bizcasts.add(bizcast);
+    }
+
+    public void save(User user) {
+        users.add(user);
+    }
+
+    public User findUser(String username) {
+        for (User user: users) {
+            if (user.getUserName().equals(username)) {
+                return user;
+            }
+        }
+        return null;
     }
 }

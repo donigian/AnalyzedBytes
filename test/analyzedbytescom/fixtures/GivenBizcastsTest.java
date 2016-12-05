@@ -22,16 +22,6 @@ public class GivenBizcastsTest {
     }
 
     @Test
-    public void setTitle() throws Exception {
-
-    }
-
-    @Test
-    public void setPublished() throws Exception {
-
-    }
-
-    @Test
     public void execute() throws Exception {
         GivenBizcasts givenBizcasts = new GivenBizcasts();
         givenBizcasts.execute();
