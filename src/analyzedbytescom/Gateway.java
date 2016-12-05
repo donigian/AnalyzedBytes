@@ -11,4 +11,9 @@ public interface Gateway {
     void delete(Bizcast bizcast);
 
     void save(Bizcast bizcast);
+
+    void save(User user);
+
+    User findUser(String username);
+
 }
