@@ -10,9 +10,9 @@ public interface Gateway {
 
     void delete(Bizcast bizcast);
 
-    void save(Bizcast bizcast);
+    Bizcast save(Bizcast bizcast);
 
-    void save(User user);
+    User save(User user);
 
     void save(License license);
 
@@ -20,7 +20,7 @@ public interface Gateway {
 
     Bizcast findBizcastByTitle(String bizcastTitle);
 
-    List<License> findAllLicensesForUserAndBizcast(User user, Bizcast bizcast);
+    List<License> findLicensesForUserAndBizcast(User user, Bizcast bizcast);
 
 }
 

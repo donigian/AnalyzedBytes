@@ -5,15 +5,13 @@ import analyzedbytescom.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static analyzedbytescom.Context.gateway;
-
 /**
  * Created by arm on 12/5/16.
  */
 public class BizcastPresentation {
     private PresentBizcastUseCase useCase = new PresentBizcastUseCase();
 
-    private GateKeeper gateKeeper = new GateKeeper();
+    public static GateKeeper gateKeeper = new GateKeeper();
 
     public BizcastPresentation(){
         Context.gateway = new MockGateway();

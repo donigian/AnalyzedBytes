@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by arm on 12/5/16.
  */
-public class Bizcast {
+public class Bizcast extends Entity {
     private String title;
     private String publicationDate;
 
@@ -22,8 +22,8 @@ public class Bizcast {
         return title;
     }
 
-    public boolean isSame(Bizcast bizcast) {
-        return true;
+    public String getPublicationDate() {
+        return publicationDate;
     }
 }
 

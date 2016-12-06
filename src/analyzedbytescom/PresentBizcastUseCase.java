@@ -10,11 +10,22 @@ import java.util.List;
  */
 public class PresentBizcastUseCase {
     public List<PresentableBizcast> presentBizcasts(User loggedInUser) {
-        return new ArrayList<PresentableBizcast>();
+        ArrayList<PresentableBizcast> presentableBizcasts = new ArrayList<PresentableBizcast>();
+        List<Bizcast> allBizcasts = Context.gateway.findAllBizcasts();
+
+        for (Bizcast bizcast : allBizcasts) {
+            PresentableBizcast bc = new PresentableBizcast();
+            bc.title = bizcast.getTitle();
+            bc.publicationDate = bizcast.getPublicationDate();
+            bc.isViewable = isLicensedToViewBizcast(loggedInUser, bizcast);
+            presentableBizcasts.add(bc);
+        }
+
+        return presentableBizcasts;
     }
 
     public boolean isLicensedToViewBizcast(User user, Bizcast bizcast) {
-        List<License> licenses = Context.gateway.findAllLicensesForUserAndBizcast(user, bizcast);
+        List<License> licenses = Context.gateway.findLicensesForUserAndBizcast(user, bizcast);
         return !licenses.isEmpty();
     }
 }
