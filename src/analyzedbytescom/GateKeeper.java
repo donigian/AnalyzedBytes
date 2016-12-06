@@ -1,4 +1,4 @@
-package analyzedbytescom.fixtures;
+package analyzedbytescom;
 
 import analyzedbytescom.User;
 

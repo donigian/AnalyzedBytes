@@ -5,7 +5,7 @@ import sun.jvm.hotspot.utilities.BitMap;
 /**
  * Created by arm on 12/5/16.
  */
-public class License {
+public class License extends Entity {
     private User user;
     private Bizcast bizcast;
 

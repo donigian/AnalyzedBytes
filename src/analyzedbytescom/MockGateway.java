@@ -25,19 +25,20 @@ public class MockGateway implements Gateway {
         bizcasts.remove(bizcast);
     }
 
-    public void save(Bizcast bizcast) {
-        bizcasts.add(bizcast);
+    public Bizcast save(Bizcast bizcast) {
+        bizcasts.add((Bizcast)establishId(bizcast));
+        return bizcast;
     }
 
-    public void save(User user) {
-        establishId(user);
-        users.add(user);
+    public User save(User user) {
+        users.add((User)establishId(user));
+        return user;
     }
 
-    private void establishId(User user) {
-        if (user.getId() == null) {
-            user.setId(UUID.randomUUID().toString());
-        }
+    private Entity establishId(Entity entity) {
+        if (entity.getId() == null)
+            entity.setId(UUID.randomUUID().toString());
+        return entity;
     }
 
     public void save(License license) {
@@ -62,7 +63,7 @@ public class MockGateway implements Gateway {
         return null;
     }
 
-    public List<License> findAllLicensesForUserAndBizcast(User user, Bizcast bizcast) {
+    public List<License> findLicensesForUserAndBizcast(User user, Bizcast bizcast) {
         List<License> results = new ArrayList<License>();
         for(License license : licenses){
             if (license.getUser().isSame(user) && license.getBizcast().isSame(bizcast)) {
