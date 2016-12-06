@@ -12,5 +12,10 @@ public class PresentBizcastUseCase {
     public List<PresentableBizcast> presentBizcasts(User loggedInUser) {
         return new ArrayList<PresentableBizcast>();
     }
+
+    public boolean isLicensedToViewBizcast(User user, Bizcast bizcast) {
+        List<License> licenses = Context.gateway.findAllLicensesForUserAndBizcast(user, bizcast);
+        return !licenses.isEmpty();
+    }
 }
 

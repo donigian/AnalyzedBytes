@@ -14,6 +14,13 @@ public interface Gateway {
 
     void save(User user);
 
+    void save(License license);
+
     User findUser(String username);
 
+    Bizcast findBizcastByTitle(String bizcastTitle);
+
+    List<License> findAllLicensesForUserAndBizcast(User user, Bizcast bizcast);
+
 }
+

@@ -1,7 +1,6 @@
 package analyzedbytescom;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by arm on 12/5/16.
@@ -9,11 +8,13 @@ import java.util.List;
 public class MockGateway implements Gateway {
 
     private ArrayList<Bizcast> bizcasts;
-    public ArrayList<User> users;
+    private ArrayList<User> users;
+    private ArrayList<License> licenses;
 
     public MockGateway() {
         bizcasts = new ArrayList<Bizcast>();
         users = new ArrayList<User>();
+        licenses = new ArrayList<License>();
     }
 
     public List<Bizcast> findAllBizcasts() {
@@ -29,7 +30,18 @@ public class MockGateway implements Gateway {
     }
 
     public void save(User user) {
+        establishId(user);
         users.add(user);
+    }
+
+    private void establishId(User user) {
+        if (user.getId() == null) {
+            user.setId(UUID.randomUUID().toString());
+        }
+    }
+
+    public void save(License license) {
+        licenses.add(license);
     }
 
     public User findUser(String username) {
@@ -39,5 +51,24 @@ public class MockGateway implements Gateway {
             }
         }
         return null;
+    }
+
+    public Bizcast findBizcastByTitle(String bizcastTitle) {
+        for (Bizcast bizcast : bizcasts) {
+            if (bizcast.getTitle().equals(bizcastTitle)) {
+                return bizcast;
+            }
+        }
+        return null;
+    }
+
+    public List<License> findAllLicensesForUserAndBizcast(User user, Bizcast bizcast) {
+        List<License> results = new ArrayList<License>();
+        for(License license : licenses){
+            if (license.getUser().isSame(user) && license.getBizcast().isSame(bizcast)) {
+                results.add(license);
+            }
+        }
+        return results;
     }
 }
