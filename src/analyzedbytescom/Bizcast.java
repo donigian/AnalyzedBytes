@@ -6,7 +6,7 @@ import java.io.Serializable;
  * Created by arm on 12/5/16.
  */
 public class Bizcast {
-    private Serializable title;
+    private String title;
     private String publicationDate;
 
     public void setTitle(String title) {
@@ -15,6 +15,15 @@ public class Bizcast {
 
     public void setPublicationDate(String publicationDate) {
         this.publicationDate = publicationDate;
+    }
+
+
+    public String getTitle() {
+        return title;
+    }
+
+    public boolean isSame(Bizcast bizcast) {
+        return true;
     }
 }
 

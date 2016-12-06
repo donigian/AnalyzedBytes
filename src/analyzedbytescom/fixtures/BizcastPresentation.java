@@ -35,8 +35,12 @@ public class BizcastPresentation {
         }
     }
 
-    public boolean createLicenseForViewing(String user, String bizcast) {
-        return false;
+    public boolean createLicenseForViewing(String username, String bizcastTitle) {
+        User user = Context.gateway.findUser(username);
+        Bizcast bizcast = Context.gateway.findBizcastByTitle(bizcastTitle);
+        License license = new License(user, bizcast);
+        Context.gateway.save(license);
+        return useCase.isLicensedToViewBizcast(user, bizcast);
     }
 
     public String presentationUser() {
