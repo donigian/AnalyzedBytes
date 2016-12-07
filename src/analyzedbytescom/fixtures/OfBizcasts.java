@@ -23,18 +23,19 @@ public class OfBizcasts {
         List<PresentableBizcast> presentableCodecasts = useCase.presentBizcasts(loggedInUser);
         List<Object> queryResponse = new ArrayList<Object>();
         for (PresentableBizcast pbz : presentableCodecasts)
-            queryResponse.add(makeRow(pbz.title, pbz.title, pbz.title, pbz.isViewable, false));
+            queryResponse.add(makeRow(pbz));
         return queryResponse;
 
     }
 
-    private List<Object> makeRow(String title, String picture, String description, boolean viewable, boolean downloadable) {
+    private List<Object> makeRow(PresentableBizcast pc) {
         return list(
-                new Object[]{list("title", title),
-                        list("picture", picture),
-                        list("description", description),
-                        list("viewable", viewable ? "+" : "-"),
-                        list("downloadable", downloadable ? "+" : "-")}
+                new Object[]{list("title", pc.title),
+                        list("publication date", pc.publicationDate),
+                        list("picture", pc.title),
+                        list("description", pc.title),
+                        list("viewable", pc.isViewable ? "+" : "-")}
+//                        list("downloadable", pc.isDownloadable ? "+" : "-")}
         );
     }
 }

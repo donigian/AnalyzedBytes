@@ -6,8 +6,8 @@ import java.util.List;
  * Created by arm on 12/5/16.
  */
 public interface Gateway {
-    List<Bizcast> findAllBizcasts();
-
+//    List<Bizcast> findAllBizcastsSortedChronologically();
+    List<Bizcast> findAllBizcastsSortedChronologically();
     void delete(Bizcast bizcast);
 
     Bizcast save(Bizcast bizcast);
