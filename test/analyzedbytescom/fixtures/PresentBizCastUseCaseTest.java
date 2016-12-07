@@ -4,6 +4,8 @@ import analyzedbytescom.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static junit.framework.TestCase.assertFalse;
@@ -29,23 +31,23 @@ public class PresentBizCastUseCaseTest {
 
     @Test
     public void userWithoutViewLicense_cannotViewBizcast() throws Exception {
-        assertFalse(useCase.isLicensedToViewBizcast(user, bizcast));
+        assertFalse(useCase.isLicensedFor(License.LicenseType.VIEWING, user, bizcast));
     }
 
     @Test
     public void userWithViewLicense_canViewBizcast() throws Exception {
-        License viewLicense = new License(user, bizcast);
+        License viewLicense = new License(License.LicenseType.VIEWING, user, bizcast);
         Context.gateway.save(viewLicense);
-        assertTrue(useCase.isLicensedToViewBizcast(user, bizcast));
+        assertTrue(useCase.isLicensedFor(License.LicenseType.VIEWING, user, bizcast));
     }
 
     @Test
     public void userWithoutViewLicense_cannotViewOtherUsersBizcast() throws Exception {
         User otherUser = Context.gateway.save(new User("OtherUser"));
 
-        License viewLicense = new License(user, bizcast);
+        License viewLicense = new License(License.LicenseType.VIEWING, user, bizcast);
         Context.gateway.save(viewLicense);
-        assertFalse(useCase.isLicensedToViewBizcast(otherUser, bizcast));
+        assertFalse(useCase.isLicensedFor(License.LicenseType.VIEWING, otherUser, bizcast));
     }
 
     @Test
@@ -58,12 +60,13 @@ public class PresentBizCastUseCaseTest {
     @Test
     public void presentOneBizcast() throws Exception {
         bizcast.setTitle("Some Title");
-        bizcast.setPublicationDate("Tomorrow");
+        Date now = new GregorianCalendar(2014, 4, 19).getTime();
+        bizcast.setPublicationDate(now);
         List<PresentableBizcast> presentableBizcasts = useCase.presentBizcasts(user);
         assertEquals(1, presentableBizcasts.size());
         PresentableBizcast presentableBizcast = presentableBizcasts.get(0);
         assertEquals("Some Title", presentableBizcast.title);
-        assertEquals("Tomorrow", presentableBizcast.publicationDate);
+        assertEquals("5/19/2014", presentableBizcast.publicationDate);
     }
 
     @Test
@@ -75,9 +78,19 @@ public class PresentBizCastUseCaseTest {
 
     @Test
     public void presentedBizcastIsViewableIfLicenseExists() throws Exception {
-        Context.gateway.save(new License(user, bizcast));
+        Context.gateway.save(new License(License.LicenseType.VIEWING, user, bizcast));
         List<PresentableBizcast> presentableBizcasts = useCase.presentBizcasts(user);
         PresentableBizcast presentableBizcast = presentableBizcasts.get(0);
         assertTrue(presentableBizcast.isViewable);
+    }
+
+    @Test
+    public void presentedBizcastIsDownloadableIfDownloadLicenseExists() {
+        License downloadLicense = new License(License.LicenseType.DOWNLOADING,user, bizcast);
+        Context.gateway.save(downloadLicense);
+        List<PresentableBizcast> presentableBizcasts = useCase.presentBizcasts(user);
+        PresentableBizcast presentableBizcast = presentableBizcasts.get(0);
+        assertTrue(presentableBizcast.isDownloadable);
+        assertFalse(presentableBizcast.isViewable);
     }
 }

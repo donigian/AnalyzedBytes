@@ -17,8 +17,14 @@ public class MockGateway implements Gateway {
         licenses = new ArrayList<License>();
     }
 
-    public List<Bizcast> findAllBizcasts() {
-        return bizcasts;
+    public List<Bizcast> findAllBizcastsSortedChronologically(){
+        List<Bizcast> sortedBizcasts = new ArrayList<Bizcast>(bizcasts);
+        Collections.sort(sortedBizcasts, new Comparator<Bizcast>() {
+            public int compare(Bizcast o1, Bizcast o2) {
+                return o1.getPublicationDate().compareTo(o2.getPublicationDate());
+            }
+        });
+        return sortedBizcasts;
     }
 
     public void delete(Bizcast bizcast) {

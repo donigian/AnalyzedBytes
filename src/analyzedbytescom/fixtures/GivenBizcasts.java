@@ -2,7 +2,9 @@ package analyzedbytescom.fixtures;
 
 import analyzedbytescom.Bizcast;
 import analyzedbytescom.Context;
-import analyzedbytescom.MockGateway;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Created by arm on 12/5/16.
@@ -10,7 +12,7 @@ import analyzedbytescom.MockGateway;
 public class GivenBizcasts {
     private String title;
     private String publicationDate;
-    private MockGateway mockGateway = new MockGateway();
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yyyy");
 
     public void setTitle(String title) {
         this.title = title;
@@ -20,11 +22,12 @@ public class GivenBizcasts {
         this.publicationDate = publicationDate;
     }
 
-    public void execute() {
+    public void execute() throws ParseException {
         Bizcast bizcast = new Bizcast();
         bizcast.setTitle(title);
-        bizcast.setPublicationDate(publicationDate);
-//      Context.gateway.save(bizcast);
-        mockGateway.save(bizcast);
+//        System.out.println(publicationDate);
+//        System.out.println(dateFormat.parse(publicationDate));
+        bizcast.setPublicationDate(dateFormat.parse(publicationDate));
+        Context.gateway.save(bizcast);
     }
 }
